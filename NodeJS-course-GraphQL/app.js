@@ -4,14 +4,18 @@ const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
 const { graphqlHTTP } = require('express-graphql');
+const helmet = require('helmet');
+const morgan = require('morgan');
 
 const graphqlSchema = require('./graphql/schema');
 const graphqlResolvers = require('./graphql/resolvers');
 const auth = require('./middleware/auth');
 const { clearImage } = require('./utils/file');
 
+require('dotenv').config();
+
 const MONGODB_URI =
-  'mongodb+srv://admin:85920868@cluster0.4ng6hf5.mongodb.net/messages?retryWrites=true&w=majority';
+`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.4ng6hf5.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true&w=majority`;
 
 const app = express();
 
